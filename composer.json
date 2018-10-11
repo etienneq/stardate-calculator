@@ -1,0 +1,21 @@
+{
+	"name" : "etienneq/stardate-calculator",
+	"description" : "PHP Converter between Star Trek's stardates and real date/time expressions.",
+	"type" : "library",
+	"require" : {
+		"php" : "7.2.*"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "^7.4"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"EtienneQ\\Stardate\\" : "src"
+		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"Tests\\EtienneQ\\Stardate\\" : "tests"
+		}
+	}
+}
