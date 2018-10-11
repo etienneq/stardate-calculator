@@ -2,6 +2,8 @@
 
 PHP Converter between Star Trek's stardates and real date/time expressions.
 
+At the moment only TNG-era stardates are supported.
+
 ## Prerequisites
 
 Stardate Calculator requires PHP >= 7.2.
