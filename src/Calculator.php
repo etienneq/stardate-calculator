@@ -6,7 +6,7 @@ namespace EtienneQ\Stardate;
  */
 class Calculator
 {
-    protected const MIN_YEAR = 2323; // 2323-01-01 00:00:00 -> SD 0.0
+    public const MIN_YEAR = 2323; // 2323-01-01 00:00:00 -> SD 0.0
     
     protected const UNITS_PER_YEAR = 1000;
     
