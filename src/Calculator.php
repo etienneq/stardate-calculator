@@ -8,6 +8,8 @@ class Calculator
 {
     public const MIN_YEAR = 2323; // 2323-01-01 00:00:00 -> SD 0.0
     
+    public const MAX_STARDATE = 7676999.99998; // Converts to 9999-12-31 23:59:59
+    
     protected const UNITS_PER_YEAR = 1000;
     
     /**
@@ -45,6 +47,10 @@ class Calculator
     
     public function toGregorianDate(float $stardate):\DateTime
     {
+        if ($stardate > self::MAX_STARDATE) {
+            throw new InvalidStardateException('Stardate must be no greater than '.self::MAX_STARDATE);
+        };
+        
         $yearsSinceEpoch = $stardate / self::UNITS_PER_YEAR;
         $fullYearsSinceEpoch = floor($yearsSinceEpoch);
         

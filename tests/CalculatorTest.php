@@ -2,8 +2,9 @@
 namespace Tests\EtienneQ\Stardate;
 
 use EtienneQ\Stardate\Calculator;
-use PHPUnit\Framework\TestCase;
 use EtienneQ\Stardate\InvalidDateException;
+use EtienneQ\Stardate\InvalidStardateException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Calculator
@@ -57,6 +58,13 @@ class CalculatorTest extends TestCase
             'beginning of feb 83' => ['2383-02-01', 60084.93151],
             'end of feb 83' => ['2383-02-28 23:59:59', 60161.64380],
         ];
+    }
+    
+    public function testToGregorianDateWithInvalidStardateShouldThrowException()
+    {
+        $this->expectException(InvalidStardateException::class);
+        
+        self::$calculator->toGregorianDate(7676999.999981);
     }
 
     /**
