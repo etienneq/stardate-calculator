@@ -90,6 +90,7 @@ class CalculatorTest extends TestCase
             'start of VOY season 1' => [48000, '2371-01-01 00:00:00'],
             'beginning of feb 83' => [60084.93151, '2383-02-01 00:00:00'],
             'end of feb 83' => [60161.64380, '2383-02-28 23:59:59'],
+            'max date' => [7676999.99998, '9999-12-31 23:59:59'],
         ];
     }
 }
