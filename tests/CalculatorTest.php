@@ -7,7 +7,7 @@ use EtienneQ\Stardate\InvalidStardateException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Calculator
+ * @covers \EtienneQ\Stardate\Calculator
  */
 class CalculatorTest extends TestCase
 {
@@ -23,9 +23,10 @@ class CalculatorTest extends TestCase
         self::$calculator = new Calculator();
     }
     
-    public function testToStardateWithInvalidDateShouldThrowException()
+    public function testToStardateWithDateTooLowShouldThrowException()
     {
         $this->expectException(InvalidDateException::class);
+        $this->expectExceptionMessage('Year of given date must be at least 2323.');
         
         $invalidDatetime = new \DateTime('2322-12-31 23:59:59');
         
@@ -57,12 +58,22 @@ class CalculatorTest extends TestCase
             'start of VOY season 1' => ['2371-01-01', 48000],
             'beginning of feb 83' => ['2383-02-01', 60084.93151],
             'end of feb 83' => ['2383-02-28 23:59:59', 60161.64380],
+            'max date' => ['9999-12-31 23:59:59', 7676999.99997],
         ];
     }
     
-    public function testToGregorianDateWithInvalidStardateShouldThrowException()
+    public function testToGregorianDateWithStardateTooLowShouldThrowException()
     {
         $this->expectException(InvalidStardateException::class);
+        $this->expectExceptionMessage('Stardate must be between 0 and 7676999.99997.');
+        
+        self::$calculator->toGregorianDate(-0.1);
+    }
+    
+    public function testToGregorianDateWithStardateTooHighShouldThrowException()
+    {
+        $this->expectException(InvalidStardateException::class);
+        $this->expectExceptionMessage('Stardate must be between 0 and 7676999.99997.');
         
         self::$calculator->toGregorianDate(7676999.999981);
     }
@@ -70,7 +81,7 @@ class CalculatorTest extends TestCase
     /**
      * @dataProvider dataProviderStardates
      */
-    public function testToGregorianDateShouldReturnDate(float $stardate, string $expectedDate)
+    public function testToGregorianDateWithValidStardateShouldReturnDate(float $stardate, string $expectedDate)
     {
         $date = self::$calculator->toGregorianDate($stardate);
         
@@ -90,7 +101,7 @@ class CalculatorTest extends TestCase
             'start of VOY season 1' => [48000, '2371-01-01 00:00:00'],
             'beginning of feb 83' => [60084.93151, '2383-02-01 00:00:00'],
             'end of feb 83' => [60161.64380, '2383-02-28 23:59:59'],
-            'max date' => [7676999.99998, '9999-12-31 23:59:59'],
+            'max date' => [7676999.99997, '9999-12-31 23:59:59'],
         ];
     }
 }

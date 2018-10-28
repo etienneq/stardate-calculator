@@ -6,9 +6,10 @@ namespace EtienneQ\Stardate;
  */
 class Calculator
 {
-    public const MIN_YEAR = 2323; // 2323-01-01 00:00:00 -> SD 0.0
+    public const MIN_YEAR = 2323;
     
-    public const MAX_STARDATE = 7676999.99998; // Converts to 9999-12-31 23:59:59
+    public const MIN_STARDATE = 0;
+    public const MAX_STARDATE = 7676999.99997;
     
     protected const UNITS_PER_YEAR = 1000;
     
@@ -28,7 +29,7 @@ class Calculator
         $dateTime = \DateTime::createFromFormat('Y-m-d H:i:s', $dateTime->format('Y-m-d H:i:s'), $this->timezone);
         
         if ($dateTime->format('Y') < self::MIN_YEAR) {
-            throw new InvalidDateException('Year of given date must be at least '.self::MIN_YEAR);
+            throw new InvalidDateException(sprintf('Year of given date must be at least %d.', self::MIN_YEAR));
         };
         
         $firstDayOfYear = new \DateTime($dateTime->format('Y-01-01'), $this->timezone);
@@ -47,8 +48,8 @@ class Calculator
     
     public function toGregorianDate(float $stardate):\DateTime
     {
-        if ($stardate > self::MAX_STARDATE) {
-            throw new InvalidStardateException('Stardate must be no greater than '.self::MAX_STARDATE);
+        if ($stardate < self::MIN_STARDATE || $stardate > self::MAX_STARDATE) {
+            throw new InvalidStardateException(sprintf('Stardate must be between %d and %.5f.', self::MIN_STARDATE, self::MAX_STARDATE));
         };
         
         $yearsSinceEpoch = $stardate / self::UNITS_PER_YEAR;
